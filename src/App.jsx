@@ -5,7 +5,7 @@ export default function App() {
   return (
     <div className="App">
       <header>
-        <h1>Game</h1>
+        <h1>Sock Game</h1>
       </header>
       <main>
         <Game />
