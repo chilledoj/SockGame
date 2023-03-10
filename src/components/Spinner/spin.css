@@ -1,0 +1,11 @@
+.card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card.active {
+  background: rgba(255, 252, 127, 0.3);
+}
+header.active h4 {
+  font-weight: 900;
+}

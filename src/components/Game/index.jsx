@@ -2,6 +2,7 @@ import Spinner from "../Spinner";
 import useGameStore from "../../store";
 import ScoreBar from "../ScoreBar";
 import NewGameForm from "./newGameForm";
+import EndGameDetails from "./EndGameDetails";
 
 const Game = () => {
   const [game, newGame, exitGame, addWin, setIndex] = useGameStore();
@@ -21,62 +22,34 @@ const Game = () => {
   }
 
   if (game.status === "end") {
-    return (
-      <div>
-        <h2 style={{ color: game.winners }}>{game.winners} are the winners</h2>
-        <p>
-          <span>{game[game.winners]}</span>
-          <span>&nbsp; - &nbsp;</span>
-          <span>{game.winners === "blue" ? game.red : game.blue}</span>
-        </p>
-        <button onClick={exitGameplay}>Reset</button>
-        <ul>
-          {game.history.map((h, i) => (
-            <li key={i}>
-              <span
-                style={{
-                  display: "inline-block",
-                  minWidth: "1 rem",
-                  width: "1rem",
-                  height: "1 rem",
-                  backgroundColor: h.team
-                }}
-              >
-                &nbsp;
-              </span>{" "}
-              {h.item.txt}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+    return <EndGameDetails game={game} exitGame={exitGame} />;
   }
 
   return (
     <>
-      <section>
-        <div>
-          <h4>Game ID: {game.id}</h4>
-          <p>{game.gameType}</p>
-        </div>
-        <div>
-          <button onClick={exitGameplay}>Exit Game</button>
+      <section style={{marginBottom:"2rem"}}>
+        <div style={{display:'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <h4>Game / {game.id} <span className="tag">{game.gameType}</span></h4>
+          <div><button onClick={exitGameplay} className="button dark">x</button></div>
         </div>
       </section>
-      <section>
-        <div>
-          <h6>Blue</h6>
-          <ScoreBar current={game.blue} max={game.maxPoints} />
+      <section className="is-center" style={{marginBottom:"2rem"}}>
+        <div style={{marginRight: '2rem'}} className="card">
+          <header style={{backgroundColor:"var(--color-blue)", color:"white", padding: "0.1rem", textAlign: 'center'}}>
+            <h3>Blue</h3>
+          </header>
+          <ScoreBar current={game.blue} max={game.maxPoints} team="blue" />
         </div>
-        <div>
-          <h6>Red</h6>
-          <ScoreBar current={game.red} max={game.maxPoints} />
+        <div className="card">
+          <header style={{backgroundColor:"var(--color-red)", color:"white", padding: "0.1rem", textAlign: 'center'}}>
+            <h3>Red</h3>
+          </header>
+          <ScoreBar current={game.red} max={game.maxPoints} team="red" />
         </div>
       </section>
-      <section>
+      <section style={{marginBottom:"2rem"}}>
         <Spinner game={game} registerWin={registerWin} setIndex={setIndex} />
       </section>
-      <section></section>
     </>
   );
 };

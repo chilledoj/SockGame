@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   GAMETYPE_RANDOM,
   GAMETYPE_ORDERED,
   GAMETYPE_UNIQUE
 } from "../../store";
+import "./spin.css"
 
 const Spinner = ({ game, registerWin, setIndex }) => {
   const [currentItem, setCurrentItem] = useState(null);
@@ -37,31 +38,33 @@ const Spinner = ({ game, registerWin, setIndex }) => {
 
   return (
     <>
+      {currentItem && (
+          <div className="is-horizontal-align">
+            <button onClick={registerWin("blue", currentItem)} className="button is-rounded" style={{backgroundColor: 'blue', color: 'white'}}>Blue win</button>
+            <button onClick={registerWin("red", currentItem)} className="button is-rounded" style={{backgroundColor: 'red', color: 'white'}}>Red win</button>
+          </div>
+        )}
       <div>
-        <button onClick={doSpin}>
+        <button onClick={doSpin} className="button primary">
           {currentItem === null ? "Start" : "Spin"}
         </button>
-        <ul>
+        <div className="card-container">
           {game.gameItems.map((itm) => (
-            <li
+            <div
               key={itm.txt}
-              style={{
-                fontWeight:
-                  currentItem && currentItem.txt === itm.txt ? "bold" : null
-              }}
+              className={"card"+(currentItem && currentItem.txt === itm.txt ? " active" : "")}
             >
-              {currentItem && currentItem.txt === itm.txt ? "=> " : ""}
-              {itm.txt}
-            </li>
+              <header className={currentItem && currentItem.txt === itm.txt ? "active" : null}>
+                <h4>{currentItem && currentItem.txt === itm.txt ? "=> " : ""}
+                {itm.txt}
+                </h4>
+              </header>
+              <p>{itm.icon?<img src={itm.icon.cmp} />:null}</p>
+            </div>
           ))}
-        </ul>
-      </div>
-      {currentItem && (
-        <div>
-          <button onClick={registerWin("blue", currentItem)}>Blue win</button>
-          <button onClick={registerWin("red", currentItem)}>Red win</button>
         </div>
-      )}
+      </div>
+      
     </>
   );
 };

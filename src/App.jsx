@@ -1,11 +1,16 @@
 import Game from "./components/Game";
+import "chota";
 import "./styles.css";
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="container">
       <header>
-        <h1>Sock Game</h1>
+        <nav className="nav">
+          <div className="nav-left">
+            <a className="brand" href="#">Sock Game</a>
+          </div>
+        </nav>
       </header>
       <main>
         <Game />
