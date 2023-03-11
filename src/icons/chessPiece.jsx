@@ -1,8 +1,8 @@
-export default function ChessPiece() {
+export default function ChessPiece({size="100"}) {
   return (
     <svg
-      width="100"
-      height="100"
+      width={size}
+      height={size}
       viewBox="0 0 100 100"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"

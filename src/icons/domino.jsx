@@ -1,6 +1,6 @@
-export default function Domino() {
+export default function Domino({size="100"}) {
    return (
-   <svg width="100" height="100" viewBox="0 0 100 100"
+   <svg width={size} height={size} viewBox="0 0 100 100"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:svg="http://www.w3.org/2000/svg" >

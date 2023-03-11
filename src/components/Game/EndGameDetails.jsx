@@ -1,3 +1,4 @@
+import React from 'react'
 const EndGameDetails = ({game, exitGame}) => {
 
   const exitGameplay = (e) => {
@@ -37,7 +38,7 @@ const EndGameDetails = ({game, exitGame}) => {
                   </span>{" "}
                   {h.item.txt}
                   </div>
-                  {h.item.icon?h.item.icon.cmp:null}
+                  {h.item.icon?React.cloneElement(h.item.icon.cmp, {size: '30'}):null}
                 </div>
               ))}
             </div>
