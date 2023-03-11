@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+export default function WoodenPawn() {
+  return (
 <svg
   width="100"
   height="100"
@@ -13,3 +14,5 @@
     <path fill="black" d="M 33,78 Q 50 -5 67 78" />
   </g>
 </svg>
+  )
+}

@@ -1,5 +1,6 @@
-<?xml version="1.0" ?>
-<svg
+export default function Button() {
+  return (
+    <svg
   width="100"
   height="100"
   viewBox="0 0 100 100"
@@ -7,8 +8,8 @@
   xmlns="http://www.w3.org/2000/svg"
   xmlns:svg="http://www.w3.org/2000/svg">
   <g >
-    <circle cx="50" cy="50" r="47" stroke="black" stroke-width="1" fill="black" />
-    <circle cx="50" cy="50" r="43" stroke="white" stroke-width="1.5" fill="none" />
+    <circle cx="50" cy="50" r="47" stroke="black" strokeWidth="1" fill="black" />
+    <circle cx="50" cy="50" r="43" stroke="white" strokeWidth="1.5" fill="none" />
     <g transform="rotate(15,50,50)">
       <circle cx="50" cy="40" r="4" stroke="none" fill="white" />
       <circle cx="50" cy="60" r="4" stroke="none" fill="white" />
@@ -17,3 +18,5 @@
     </g>
   </g>
 </svg>
+  )
+}

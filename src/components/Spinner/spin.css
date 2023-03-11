@@ -9,3 +9,8 @@
 header.active h4 {
   font-weight: 900;
 }
+
+.dark .icon-box {
+  background: white;
+  width: 100px;
+}

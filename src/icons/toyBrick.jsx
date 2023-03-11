@@ -1,10 +1,10 @@
-<?xml version="1.0" ?>
+export default function ToyBrick() {
+  return (
 <svg
   width="100"
   height="100"
   viewBox="0 0 100 100"
   version="1.1"
-  id="toyBrick"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:svg="http://www.w3.org/2000/svg">
   <g>
@@ -14,3 +14,5 @@
     <rect x="65" width="20" y="22" height="8" stroke="none" fill="black"/>
   </g>
 </svg>
+  )
+}

@@ -1,4 +1,5 @@
-<?xml version="1.0" ?>
+export default function PokerChip() {
+  return (
 <svg
   width="100"
   height="100"
@@ -7,8 +8,8 @@
   xmlns="http://www.w3.org/2000/svg"
   xmlns:svg="http://www.w3.org/2000/svg">
   <g transform="rotate(10,50,50)">
-    <circle cx="50" cy="50" r="47" stroke="black" stroke-width="1" fill="black" />
-    <circle cx="50" cy="50" r="27" stroke="white" stroke-width="1" fill="none" />
+    <circle cx="50" cy="50" r="47" stroke="black" strokeWidth="1" fill="black" />
+    <circle cx="50" cy="50" r="27" stroke="white" strokeWidth="1" fill="none" />
     <g>
       <circle cx="50" cy="12" r="3" stroke="none"  fill="white" />
       <circle cx="50" cy="88" r="3" stroke="none"  fill="white" />
@@ -22,3 +23,5 @@
     </g>
   </g>
 </svg>
+  )
+}

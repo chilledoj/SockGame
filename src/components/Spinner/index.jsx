@@ -59,7 +59,7 @@ const Spinner = ({ game, registerWin, setIndex }) => {
                 {itm.txt}
                 </h4>
               </header>
-              <p>{itm.icon?<img src={itm.icon.cmp} />:null}</p>
+              {itm.icon && <div className="icon-box">{itm.icon.cmp}</div>}
             </div>
           ))}
         </div>

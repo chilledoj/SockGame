@@ -1,20 +1,20 @@
 const ScoreBar = ({ current, max, team }) => {
   const barItems = Array.from(Array(max), (_, i) => ({ active: i < current }));
   return (
-    <div>
+    <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'stretch'}}>
       {barItems.map((bar, i) => (
-        <span key={i}
+        <div key={i}
           style={{
-            display: "inline-block",
             minWidth: "1 rem",
-            width: "1rem",
+            flexGrow: 1,
+            //width: "1rem",
             height: "1 rem",
             backgroundColor: bar.active?`var(--color-${team})`:'white',
             border: "1px solid black"
           }}
         >
           &nbsp;
-        </span> 
+        </div> 
       ))}
     </div>
   );
