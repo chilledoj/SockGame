@@ -4,10 +4,13 @@ import {
   GAMETYPE_ORDERED,
   GAMETYPE_UNIQUE
 } from "../../store";
-import "./spin.css"
+import items from "../../store/items";
+import "./spin.css";
 
 const Spinner = ({ game, registerWin, setIndex }) => {
   const [currentItem, setCurrentItem] = useState(null);
+  const [spinState, setSpinState] = useState(null)
+  const spinItems = [currentItem?currentItem:{...items[0]}]
 
   const doSpin = (e) => {
     e.preventDefault();
@@ -62,6 +65,25 @@ const Spinner = ({ game, registerWin, setIndex }) => {
               {itm.icon && <div className="icon-box">{itm.icon.cmp}</div>}
             </div>
           ))}
+        </div>
+        <div className="row">
+          <div className="col-1 col-3-md"></div>
+          <div className="col">
+            <div className="spinviewer">
+              <div className="spinlist">
+                {spinItems.map(itm=>(
+                  <div key={itm.txt} className="spin-item">
+                    <div className="spin-item-title">
+                      <h3>{itm.txt}</h3>
+                    </div>
+                    {itm.icon && <div className="icon-box">{React.cloneElement(itm.icon.cmp,{size: 128})}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="col-1 col-3-md"></div>
+          
         </div>
       </div>
       

@@ -16,7 +16,7 @@ export default function LetterTile({size="100"}) {
   <g>
     
     <rect x="10" width="80" y="10" height="80" rx="8" ry="8" stroke="none" fill="black"/>
-    <text x="25" y="76" fill="white" class="letter">A</text>
+    <text x="25" y="76" fill="white" className="letter">A</text>
   </g>
 </svg>
   )
