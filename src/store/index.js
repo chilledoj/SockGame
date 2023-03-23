@@ -22,6 +22,7 @@ function gameReducer(state, action) {
         gameType: action.params.gameType,
         gameItems: [...items],
         randItems: shuffle([...items]),
+        spinTime: action.params.spinTime,
         currentIdx: null,
         history: []
       };

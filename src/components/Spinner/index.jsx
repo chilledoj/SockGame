@@ -1,94 +1,139 @@
-import React, { useState } from "react";
-import {
-  GAMETYPE_RANDOM,
-  GAMETYPE_ORDERED,
-  GAMETYPE_UNIQUE
-} from "../../store";
-import items from "../../store/items";
+import { useState, useEffect, useLayoutEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import debounce from "./debounce";
+import shuffle from "./shuffle";
+
 import "./spin.css";
 
-const Spinner = ({ game, registerWin, setIndex }) => {
-  const [currentItem, setCurrentItem] = useState(null);
-  const [spinState, setSpinState] = useState(null)
-  const spinItems = [currentItem?currentItem:{...items[0]}]
-
-  const doSpin = (e) => {
-    e.preventDefault();
-    switch (game.gameType) {
-      case GAMETYPE_RANDOM:
-        const randIdx = 0 | (Math.random() * game.gameItems.length);
-        setCurrentItem(game.gameItems[randIdx]);
-        break;
-      case GAMETYPE_UNIQUE:
-        let idx =
-          ((game.currentIdx ? game.currentIdx : 0) + 1) % game.randItems.length;
-        setIndex(idx);
-        setCurrentItem(game.randItems[idx]);
-        break;
-      case GAMETYPE_ORDERED:
-        const orandIdx = 0 | (Math.random() * game.gameItems.length);
-        let oidx =
-          ((game.currentIdx !== null ? game.currentIdx : orandIdx) + 1) %
-          game.gameItems.length;
-        setIndex(oidx);
-        setCurrentItem(game.gameItems[oidx]);
-        break;
-      default:
-        break;
-    }
-    return false;
-  };
-
-  return (
-    <>
-      {currentItem && (
-          <div className="is-horizontal-align">
-            <button onClick={registerWin("blue", currentItem)} className="button is-rounded" style={{backgroundColor: 'blue', color: 'white'}}>Blue win</button>
-            <button onClick={registerWin("red", currentItem)} className="button is-rounded" style={{backgroundColor: 'red', color: 'white'}}>Red win</button>
-          </div>
-        )}
-      <div>
-        <button onClick={doSpin} className="button primary">
-          {currentItem === null ? "Start" : "Spin"}
-        </button>
-        <div className="card-container">
-          {game.gameItems.map((itm) => (
-            <div
-              key={itm.txt}
-              className={"card"+(currentItem && currentItem.txt === itm.txt ? " active" : "")}
-            >
-              <header className={currentItem && currentItem.txt === itm.txt ? "active" : null}>
-                <h4>{currentItem && currentItem.txt === itm.txt ? "=> " : ""}
-                {itm.txt}
-                </h4>
-              </header>
-              {itm.icon && <div className="icon-box">{itm.icon.cmp}</div>}
-            </div>
-          ))}
-        </div>
-        <div className="row">
-          <div className="col-1 col-3-md"></div>
-          <div className="col">
-            <div className="spinviewer">
-              <div className="spinlist">
-                {spinItems.map(itm=>(
-                  <div key={itm.txt} className="spin-item">
-                    <div className="spin-item-title">
-                      <h3>{itm.txt}</h3>
-                    </div>
-                    {itm.icon && <div className="icon-box">{React.cloneElement(itm.icon.cmp,{size: 128})}</div>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="col-1 col-3-md"></div>
-          
-        </div>
-      </div>
-      
-    </>
-  );
+const randomItem = (items) => {
+  let idx = 0 | (Math.random() * items.length);
+  return items[idx];
 };
 
-export default Spinner;
+const DefaultSpinItem = ({item, size, ...props}) => (
+  <div className="spin-item" {...props}>{JSON.stringify(item)}</div>
+)
+
+
+const Spinner = ({ 
+  items, 
+  onSelect = (item) => console.log(item), 
+  horizontal = false, 
+  transitionPeriod = 8,
+  randomFn = randomItem, 
+  renderItem = DefaultSpinItem }, 
+  extTriggerRef) => {
+  const wrapperRef = useRef(null);
+  const dummyRef = useRef(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [spinList, setSpinList] = useState([]);
+  const [size, setSize] = useState(200);
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  const calcSize = () => {
+    const { width, height } = wrapperRef.current.getBoundingClientRect();
+
+    setSize(Math.min(width, height));
+  };
+
+  const animTime = Math.max(transitionPeriod, 2);
+
+  useLayoutEffect(() => {
+    calcSize();
+  }, []);
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      calcSize();
+    }, 200);
+
+    window.addEventListener("resize", debouncedHandleResize);
+
+    return (_) => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  });
+
+  useEffect(() => {
+    if (spinList.length === 0) {
+      setSpinList([items[0]]);
+    }
+  }, [items, spinList]);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    startSpin()
+    return false;
+  }
+
+  const startSpin = (delay) => {
+    if (isSpinning) return false;
+
+    const item = randomFn(items);
+
+    const mixedItems1 = shuffle([...items])
+    const mixedItems2 = shuffle([...items])
+
+    let newList = [spinList[spinList.length-1], ...mixedItems1, ...mixedItems2, item];
+    
+    if(delay > 0){
+      setTimeout(()=>{
+        setIsSpinning(true);
+        setSpinList(newList);
+        setSelectedItem(item);
+      }, delay)  
+    }else{
+      setIsSpinning(true);
+      setSpinList(newList);
+      setSelectedItem(item);
+
+    }
+
+    
+  };
+
+  useImperativeHandle(
+    extTriggerRef || dummyRef,
+    () => ({
+      spin: (d)=>startSpin(d)
+    })
+  )
+
+  const onAnimEnd = () => {
+    setTimeout(() => {
+      setSpinList([selectedItem]);
+      setIsSpinning(false);
+      onSelect({ ...selectedItem });
+    }, 200);
+  };
+  const direction = horizontal?'right':'bottom'
+
+  return (
+    <div className="spin-container"  ref={wrapperRef}>
+      <style scoped>
+        {`.spin-view {
+            --box-width: ${size}px;
+            --box-height: ${size}px;
+            --anim-time: ${animTime}s;
+            --spin-direction: ${direction};
+            --spin-flex-direction: ${horizontal?'row':'column'}; 
+        }
+        `}
+      </style>
+      <div className="spin-view" onClick={extTriggerRef?null:handleClick} ref={extTriggerRef}>
+        <div
+          style={{
+            [direction]: isSpinning ? (spinList.length -1) * size + "px":"0"
+          }}
+          className={`spin-list ${isSpinning ? "spinning" : ""}`}
+          onTransitionEnd={onAnimEnd}
+         
+        >
+          {spinList &&
+            spinList.map((item, idx) => renderItem({key: idx , item: item, size: size }))
+          }
+        </div>
+      </div>
+    </div>
+  );
+};
+export default forwardRef(Spinner);

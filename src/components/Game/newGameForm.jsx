@@ -9,7 +9,8 @@ import {
 const NewGameForm = ({ createNewGame }) => {
   const [gameData, setGameData] = useState({
     maxPoints: 10,
-    gameType: GAMETYPE_RANDOM
+    gameType: GAMETYPE_RANDOM,
+    spinTime: 4
   });
 
   const handleSubmit = (e) => {
@@ -31,7 +32,7 @@ const NewGameForm = ({ createNewGame }) => {
         <fieldset>
           <legend>Game Parameters</legend>
           <div className="row">
-            <div className="col-6">
+            <div className="col-3">
               <label htmlFor="maxPoints">First to:</label>
               <input
                 type="number"
@@ -42,6 +43,25 @@ const NewGameForm = ({ createNewGame }) => {
                 step={1}
                 onChange={(e) => {
                   setGameData({ ...gameData, maxPoints: e.target.value });
+                }}
+              />
+            </div>
+            <div className="col-3">
+                <label
+                htmlFor="spinTime"
+                title="Starts from a random point, and then steps through the items in order."
+              >
+                Spin Time
+              </label>
+              <input
+                type="number"
+                name="spinTime"
+                value={gameData.spinTime}
+                min={2}
+                max={10}
+                step={1}
+                onChange={(e) => {
+                  setGameData({ ...gameData, spinTime: e.target.value });
                 }}
               />
             </div>
@@ -98,6 +118,9 @@ const NewGameForm = ({ createNewGame }) => {
               </div>
               </div>
             </div>
+          </div>
+          <div className="row">
+            
           </div>
         </fieldset>
         <div className="is-right" style={{marginTop: "2rem"}}>

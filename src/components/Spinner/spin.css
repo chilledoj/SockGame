@@ -1,57 +1,36 @@
-.card-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.card.active {
-  background: rgba(255, 252, 127, 0.3);
-}
-header.active h4 {
-  font-weight: 900;
-}
-
-.dark .icon-box {
-  background: white;
-  //width: 100px;
-}
-
-.spinviewer {
+.spin-container {
+  height: 100%;
   width: 100%;
-  height: min(60vw, 60vh);
-  min-height: min(60vw, 60vh);
+  display: flex;
+  justify-content: center;
+}
+.spin-view {
+  border: 1px solid black;
+  width: var(--box-width);
+  height: var(--box-height);
   overflow: hidden;
-  border: 1px solid grey;
   padding: 0;
   margin: 0;
 }
-
-.spinlist {
-  width: min(60vw, 60vh);
+.spin-list {
   padding: 0;
   margin: 0;
   position: relative;
-  width: 100%;
-  //left: 0;
-  transition: bottom 2s;
-  transition-timing-function: ease-in-out;
+  //width: var(--box-width);
+  width: auto;
+  height: 100%;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  flex-direction: var(--spin-flex-direction);
+  flex-wrap: nowrap;
+  /* bottom: 0; */
+}
+.spinning {
+  transition: var(--spin-direction) var(--anim-time);
+  transition-timing-function: cubic-bezier(0.2, -0.15, 0.15, 1.05);
 }
 .spin-item {
-  width: 100%;
-  height: min(60vw, 60vh);
-  flex: 1;
-  border: 1px solid red;
-}
-.spin-item-title h3 {
-  text-align: center;
-}
-
-.icon-box {
-  border: 1px solid green;
-  height: auto;
-  width: 100%;
-  flex-grow: 1;
+  width: var(--box-width);
+  height: var(--box-height);
+  position: relative;
+  flex: 0 0 auto;
 }

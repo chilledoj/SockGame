@@ -1,6 +1,9 @@
 export default function Clover({size="100"}){
   return (
-    <svg width={size} height={size} version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <svg width={size} height={size} version="1.1"
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg">
       <g transform="">
         <rect x="0" y="0" width="100" height="100" fill="#73b500"/>
         <g fill="white">

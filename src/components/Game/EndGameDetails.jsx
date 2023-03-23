@@ -24,8 +24,10 @@ const EndGameDetails = ({game, exitGame}) => {
             <div style={{display:"flex", flexDirection: "row", flexWrap:"wrap"}}>
               {game.history.map((h, i) => (
                 <div key={i} className="card">
-                  <div>
-                    <span
+                  <div>  
+                  {`${i+1} - ${h.item.txt}`}
+                  </div>
+                  <span
                     style={{
                       display: "inline-block",
                       minWidth: "1 rem",
@@ -35,10 +37,7 @@ const EndGameDetails = ({game, exitGame}) => {
                     }}
                   >
                     &nbsp;
-                  </span>{" "}
-                  {h.item.txt}
-                  </div>
-                  {h.item.icon?React.cloneElement(h.item.icon.cmp, {size: '30'}):null}
+                  </span>{" "}{h.item.icon?h.item.icon.cmp('50'):null}
                 </div>
               ))}
             </div>

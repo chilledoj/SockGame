@@ -3,13 +3,13 @@ const ScoreBar = ({ current, max, team }) => {
   return (
     <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'stretch'}}>
       {barItems.map((bar, i) => (
-        <div key={i}
+        <div key={i} className={`scoreBar ${bar.active?'active '+team:''}`}
           style={{
             minWidth: "1 rem",
             flexGrow: 1,
             //width: "1rem",
             height: "1 rem",
-            backgroundColor: bar.active?`var(--color-${team})`:'white',
+            //backgroundColor: bar.active?`var(--color-${team})`:'white',
             border: "1px solid black"
           }}
         >

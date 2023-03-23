@@ -1,0 +1,32 @@
+.spin-item {
+  position: relative;
+}
+.text {
+  font-weight: 700;
+  font-size: 1.75rem;
+  width: 100%;
+  background: rgba(255, 230, 100, 0.75);
+  position: absolute;
+  top: 0;
+  text-align: center;
+}
+.text.md {
+  font-size: 2.5rem;
+}
+.text.lg {
+  font-size: 4.5rem;
+}
+
+#spin-section {
+  flex: 1;
+}
+
+.scoreBar.active {
+  transition: background-color 1s;
+}
+.scoreBar.active.blue {
+  background: var(--color-blue);
+}
+.scoreBar.active.red {
+  background: var(--color-red);
+}
